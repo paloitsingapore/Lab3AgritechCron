@@ -1,6 +1,7 @@
 #!/bin/bash
 # Checking GIT PULL Requird
-
+set -ex
+repo=$1
 UpdateScript()
 {
 UPSTREAM=${1:-'@{u}'}
@@ -21,7 +22,8 @@ fi
 #Passing arguments to a function
 get_docker_version()
 {
-	version=$(docker ps |grep "$1" |awk 'BEGIN { FS=":" } /1/ { print $2 }' | awk '{print $1}')
+	echo $repo
+	version=$(docker ps |grep "$repo" |awk 'BEGIN { FS=":" } /1/ { print $2 }' | awk '{print $1}')
 	echo $version
 }
 
@@ -34,13 +36,13 @@ else
       newversion=$(echo $version | awk '{ sum=$1+.1;print sum }')
 fi
 
-echo $newversion
-out=$( { docker pull $1:$newversion; } 2>&1 )
-
+echo $repo:$newversion
+out=$( { docker pull $repo:$newversion; } 2>&1 )
+echo $out
 #Docker Image Staus
-if [[ $out == *"Image is up to date*" ]]
+if [[ $out == *"Image is up to date"* ]]
 then
-  echo image already updated
+  echo Image already updated
 elif [[ $out == *"manifest unknown"* ]]
 then
   echo  image not found
