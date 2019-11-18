@@ -1,6 +1,5 @@
 #!/bin/bash
 # Checking GIT PULL Requird
-set -ex
 repo=$1
 UpdateScript()
 {
