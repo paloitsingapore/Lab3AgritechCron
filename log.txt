@@ -1,5 +1,0 @@
-
-1.2 1.1
-agritechpaloit/webapp:1.2
-agritechpaloit/webapp:1.2
-Strings are  equal
