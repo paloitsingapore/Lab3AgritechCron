@@ -1,26 +1,16 @@
 #!/bin/bash
-#Passing arguments to a function
+#Passing arguments to a function like agritechpaloit/webapp ,agrtechpaloit/cratedb
 repo=$1
-get_docker_version()
+get_latest_version()
 {
-	echo $repo
-	version=$(docker ps |grep "$repo" |awk 'BEGIN { FS=":" } /1/ { print $2 }' | awk '{print $1}')
-	echo $version
+  newversion=$(./GetLatestImage.sh $repo)
+  echo $newversion
 }
 
 pull_docker()
-{
-
-	get_docker_version
-	if [ -z "$version" ]
-	then
-	      newversion=1.0
-	else
-	      newversion=$(echo $version | awk '{ sum=$repo+.1;print sum }')
-	fi
-	
-	echo $repo:$newversion
-	out=$( { docker pull $repo:$newversion; } 2>&1 )
+{	
+        get_latest_version
+	out=$( { sudo docker pull $newversion; } 2>&1 )
 	echo $out
 	#Docker Image Staus
 	if [[ $out == *"Image is up to date"* ]]
@@ -32,9 +22,9 @@ pull_docker()
 	elif [[ $out == *"Downloaded newer image"* ]]
 	then
 	  echo New image downloded
-	  imagename=$repo:$newversion
+	  imagename=$newversion
 	  imagefile=$(echo "$imagename" | sed "s/\//_/g")
-	  docker save $imagename | gzip > /home/pi/bin/DockerImages/$imagefile.tar.gz
+	  sudo docker save $imagename $newversion | gzip > /home/pi/bin/DockerImages/$imagefile.tar.gz
 	fi	
 }
 

@@ -1,14 +1,15 @@
-total 48
+total 52
 -rw-r--r-- 1 pi   pi     19 Nov 14 13:11 README.md
 -rwxr-xr-x 1 pi   pi     20 Nov 18 10:30 souce_list.txt
 -rwxr-xr-x 1 pi   pi    321 Nov 18 10:30 LookForGitUpdate.sh
--rwxr-xr-x 1 pi   pi   1786 Nov 19 10:54 RenewContainer.sh
 -rwxrwxrwx 1 pi   pi     27 Nov 20 10:48 RunScript.sh
 -rwxrwxrwx 1 root root  484 Nov 20 11:04 IsMaster.py
 -rwxrwxrwx 1 pi   pi    638 Nov 20 13:57 RunUpdate.sh
--rwxr-xr-x 1 pi   pi    922 Nov 20 16:40 CheckNewBuild.sh
 -rwxrwxrwx 1 pi   pi    343 Nov 20 17:10 GitUpdate.sh
--rw-r--r-- 1 pi   pi    170 Nov 20 17:15 source_list.txt
 -rwxrwxrwx 1 pi   pi    279 Nov 20 17:29 test.sh
--rwxrwxrwx 1 pi   pi    422 Nov 20 17:49 CopyUpdate.sh
--rw-r--r-- 1 pi   pi      0 Nov 20 18:00 1.txt
+-rw-r--r-- 1 pi   pi    717 Nov 20 18:00 1.txt
+-rwxr-xr-x 1 pi   pi   1786 Nov 20 18:27 RenewContainer.sh
+-rwxr-xr-x 1 pi   pi    940 Nov 20 22:47 CheckNewBuild.sh
+-rwxrwxrwx 1 pi   pi    475 Nov 21 09:47 CopyUpdate.sh
+-rwxrwxrwx 1 pi   pi    160 Nov 21 09:55 LoadDockerImage.sh
+-rw-r--r-- 1 pi   pi      0 Nov 21 09:55 source_list.txt
