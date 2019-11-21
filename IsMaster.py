@@ -4,7 +4,7 @@ from crate import client
 
 query = "select id ,rest_url from sys.nodes a where id =(select master_node from sys.cluster)"
 try:
- connection = client.connect("http://172.16.12.203:4200", username="crate")
+ connection = client.connect("http://localhost:4200", username="crate")
  cursor = connection.cursor()
  cursor.execute(query)
  result = cursor.fetchone()
@@ -15,5 +15,5 @@ try:
  cursor.close()
  connection.close()
 except Exception as e:
- print ("Error: " + e)
+ print ("0.0.0.0")
 
