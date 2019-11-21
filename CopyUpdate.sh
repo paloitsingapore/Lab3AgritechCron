@@ -19,6 +19,7 @@ do
     else
       echo Image transfer not completed
     fi	
-   echo  Replication Completed ...    
+    echo "" > source_list.txt
+    echo  Replication Completed ...    
 done
 
