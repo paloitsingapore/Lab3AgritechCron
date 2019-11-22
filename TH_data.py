@@ -10,6 +10,7 @@ import json
 import dbHandler
 
 ser = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
+data_path = '/home/pi/data'
 
 def get_Host_name_IP():
     try:
@@ -44,6 +45,14 @@ def insertdb(data):
     except:
         print ("Insert Fail")
 
+def writefile(data):
+    try:
+        file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-THDATA.txt',"w")
+        file.write(json.dumps(data))
+        file.write("\n")
+        file.close
+    except:
+        print("Not able to write to the file")
 
 while True:
     rcv = ser.read(300)
@@ -52,11 +61,12 @@ while True:
         print(data)
         #data = 'GW_ID:2,TYPE:T&H,ID:286851425,STAT:00000000,T:25.9\xa1\xe6,H:62.3%,ST:5M,V:3.55v,SN:72,RSSI:-48dBm,S:22.5769,E:113.9712,Time:0-0-0 0:0:0,T_RSSI:-80dBm\r\n'
         try:
+            json_data = json.dumps(dataformat(data))
+            writefile(json_data)
             masterip = str(subprocess.run(["python3", "IsMaster.py"], stdout=subprocess.PIPE).stdout)
             masterip = masterip[2:-3]
             currentip = get_Host_name_IP()
-            if (masterip == currentip): 
-                json_data = json.dumps(dataformat(data))
+            if str(masterip).strip() == str(currentip).strip(): 
                 insertdb(json_data)
             else:
                 print("i am not master")
