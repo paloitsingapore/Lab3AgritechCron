@@ -4,18 +4,22 @@ import zipfile
 from datetime import datetime
 import subprocess 
 from myip import GetIP 
+from datetime import datetime, timedelta
+
 # Create an S3 client
+
 print("uploading to cloud on ")
 print (GetIP())
 S3 = boto3.client('s3')
-BUCKET_NAME = 'lab3agritechtest'
+BUCKET_NAME = 'lab3agritechpaloit'
 log_directory = '/home/pi/logs/'
 data_directory ='/home/pi/data/'
 zip_log = (str(datetime.now())+'-'+'logs.zip')
 zip_data =(str(datetime.now())+'-'+'data.zip')
 zip_log =  zip_log.replace(" ", "_")
 zip_data = zip_data.replace(" ","_")
-
+y_date =  (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
+print(y_date)
 with zipfile.ZipFile(log_directory+zip_log, mode='w') as zf:
     for file in os.listdir(log_directory):
         filename = log_directory + '/' + file
@@ -27,7 +31,7 @@ print("Log Files zipped in "+zip_log)
 with zipfile.ZipFile(data_directory+zip_data, mode='w') as zf:
     for file in os.listdir(data_directory):
         filename = data_directory + '/' + file
-        if filename.endswith(".tar.gz"):
+        if  filename.endswith(".txt") and y_date in filename:
             print("zipping file "+filename)
             zf.write(filename)
 print("data file zipped in "+zip_data)
@@ -54,6 +58,5 @@ for item in data_file:
 print("Zip files removed")
 
 subprocess.call('mv  /home/pi/logs/* /home/pi/backup/logs',shell=True)
-
 subprocess.call('mv /home/pi/data/* /home/pi/backup/data',shell=True)
 
