@@ -14,28 +14,37 @@ if [ "$masterip" == "$ip" ];then
  LogFileRunScipt= RunScript.sh.$Date.log
 
  #Running Script
+  echo Running CheckNewBuild.sh for webapp.....
  ./CheckNewBuild.sh webapp >/home/pi/logs/$LogFileNameWebApp
+  echo Running CheckNewBuild.sh for cratedb....
  ./CheckNewBuild.sh cratedb >/home/pi/logs/$LogFileNameCrateDB
+  echo getting GIT UPDATE....
  ./GitUpdate.sh > /home/pi/logs/$LogFileNameGitUpd
- ./CopyUpdate.sh 172.16.14.108 > /home/pi/logs/$LogFileNameCopyUpd
+  echo coping Data to other pi ....
+ ./CopyUpdate.sh 192.168.1.102 192.168.1.103 192.168.1.104 > /home/pi/logs/$LogFileNameCopyUpd
+ 
+ echo Renewing Container ....
+ #master pi
+ ./RenewContainer.sh lab3agritechpaloit/webapp >> LogFileNameRenewCont
+ ./RenewContainer.sh lab3agritechpaloit/webapp >> LogFileNameRenewCont
+ #1st Pi
+ ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> LogFileNameRenewCont
+ ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
 
-  #1st Pi
- ./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/webapp >> LogFileNameRenewCont
- ./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/cratedb >> LogFileNameRenewCont
+ #2nd Pi
+ ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> LogFileNameRenewCont
+ ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
 
-  #2nd Pi
-  #./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/webapp >> LogFileNameRenewCont
-  #./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/cratedb >> LogFileNameRenewCont
-
-  #3rd Pi
-  #./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/webapp >> LogFileNameRenewCont
-  #./ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RenewConatiner.sh agritechpaloit/cratedb >> LogFileNameRenewCont
-
+ #3rd Pi
+ ./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> LogFileNameRenewCont
+ ./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
+ 
+ echo Running Script ....
  ./RunScript.sh > /home/pi/logs/$LogFileRunScipt
   #Run Script to other 2 pi
-  #ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RunScript.sh agritechpaloit/cratedb >> LogFileRunScipt
-  #ssh -l pi 172.16.14.108 /home/pi/Lab3AgritechCron/RunScript.sh agritechpaloit/cratedb >> LogFileRunScipt
-
+   ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RunScript.sh >> LogFileRunScipt
+   ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RunScript.sh >> LogFileRunScipt
+   ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RunScript.sh >> LogFileRunScipt
 else
  echo Not The Master Node
 fi

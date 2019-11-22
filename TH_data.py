@@ -9,6 +9,7 @@ import serial
 import json
 import dbHandler
 
+#ser = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
 ser = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
 data_path = '/home/pi/data'
 

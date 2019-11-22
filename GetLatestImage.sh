@@ -2,8 +2,8 @@
 
 
 # set username and password
-UNAME="agritechpaloit"
-UPASS="sg_paloit"
+UNAME="lab3agritechpaloit"
+UPASS="paloit"
 key="$1"
 
 # get token to be able to talk to Docker Hub

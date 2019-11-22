@@ -55,7 +55,7 @@ if [ "$RimageName" != "$AimageName" ]; then
      fi 
    elif [[ $cont_repo == *"cratedb"* ]]; then 
      echo Running New Docker Image $AimageName
-     sudo sudo docker run  -d --net crate -p 4200:4200 --name node1 -p 4300:4300 -e CRATE_HEAP_SIZE=64m -v /etc/sysctl.conf:/etc/sysctl.conf -v /home/pi/crate-4.0.7/da     ta:/home/crate/crate/data -v /home/pi/crate-4.0.7/config/:/home/crate/crate/config/  $AimageName /bin/bash -c "bin/crate -Cnetwork.host=_site_,_local_"   
+     sudo sudo docker run  -d --net crate -p 4200:4200 --name node1 -p 4300:4300 -e CRATE_HEAP_SIZE=64m -v /etc/sysctl.conf:/etc/sysctl.conf -v /home/pi/crate-4.0.6/data:/home/crate/crate/data -v /home/pi/crate-4.0.6/config/:/home/crate/crate/config/  $AimageName /bin/bash -c "bin/crate -Cnetwork.host=_site_,_local_"   
      echo waiting for 1 min to docker container is alive 
      sleep 1m
      CcontName=sudo docker ps | grep $AimageName | awk {'print $2'}  
@@ -64,7 +64,7 @@ if [ "$RimageName" != "$AimageName" ]; then
       sudo docker rm $AContID      
       echo New Conatiner is not alive $AimageName
       echo Restarting old Conatiner $RimageName
-      sudo docker run  -d --net crate -p 4200:4200 --name node1 -p 4300:4300 -e CRATE_HEAP_SIZE=64m -v /etc/sysctl.conf:/etc/sysctl.conf -v /home/pi/crate-4.0.7/da     ta:/home/crate/crate/data -v /home/pi/crate-4.0.7/config/:/home/crate/crate/config/  $RimageName /bin/bash -c "bin/crate -Cnetwork.host=_site_,_local_"   
+      sudo docker run  -d --net crate -p 4200:4200 --name node1 -p 4300:4300 --restart on-failure  -e CRATE_HEAP_SIZE=64m -v /etc/sysctl.conf:/etc/sysctl.conf -v /home/pi/crate-4.0.6/data:/home/crate/crate/data -v /home/pi/crate-4.0.6/config/:/home/crate/crate/config/  $RimageName /bin/bash -c "bin/crate -Cnetwork.host=_site_,_local_"   
       echo $RimageName startedLab3AgritechCron
      else
       --restart on-failure     
