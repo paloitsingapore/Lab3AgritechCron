@@ -30,16 +30,16 @@ if [ "$masterip" == "$myip" ];then
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		 
 		 echo Running Script ....
 		 ./RunScript.sh > /home/pi/logs/$LogFileRunScipt
@@ -54,16 +54,16 @@ if [ "$masterip" == "$myip" ];then
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		 
 		 echo Running Script ....
 		 ./RunScript.sh > /home/pi/logs/$LogFileRunScipt
@@ -79,16 +79,16 @@ if [ "$masterip" == "$myip" ];then
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 #./ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 #ssh -l pi 192.168.1.104 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		 
 		 echo Running Script ....
 		 ./RunScript.sh > /home/pi/logs/$LogFileRunScipt
@@ -103,16 +103,16 @@ if [ "$masterip" == "$myip" ];then
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.101 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		 
 		 echo Running Script ....
 		 ./RunScript.sh > /home/pi/logs/$LogFileRunScipt
