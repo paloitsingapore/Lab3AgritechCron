@@ -54,7 +54,7 @@ def insertdb(data):
 
 def writefile(data):
     try:
-        file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-THDATA.txt',"w")
+        file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-THDATA.txt',"a")
         file.write(json.dumps(data))
         file.write("\n")
         file.close
