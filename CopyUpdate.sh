@@ -12,7 +12,7 @@ do
     scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
 
     #Send Docker Image to other Nodes
-    scp -r  /home/pi/bin/DockerImages pi@$var:/home/pi/bin/DockerImages
+    scp  /home/pi/bin/DockerImages/* pi@$var:/home/pi/bin/DockerImages/
     if [ $? -eq 0 ]; then
        ssh -l pi $var /home/pi/Lab3AgritechCron/LoadDockerImage.sh
     else
