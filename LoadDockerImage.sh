@@ -8,5 +8,4 @@ do
    sudo rm $f	 
  fi 	 
  echo "Loaded to Docker Images"
- docker
 done

@@ -5,7 +5,6 @@ do
    #Send Script to other nodes
     cat source_list.txt | while read line || [[ -n $line ]];
     do
-     # do something with $line here
      if [[ ! -z $line ]]; then
       scp  /home/pi/Lab3AgritechCron/$line  pi@$var:/home/pi/Lab3AgritechCron
      fi
@@ -22,4 +21,6 @@ do
     echo "" > source_list.txt
     echo  Replication Completed ...    
 done
-
+echo Deleting Docker image fIles 
+sudo rm -r  /home/pi/bin/DockerImages
+echo File Deleted....

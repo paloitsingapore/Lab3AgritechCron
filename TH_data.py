@@ -9,14 +9,20 @@ import serial
 import json
 import dbHandler
 
+ser = None
+
 #ser = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
-ser = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
+try:
+    ser = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
+except:
+    print("port not working")
 data_path = '/home/pi/data'
 
 def get_Host_name_IP():
     try:
         host_name = socket.gethostname()
         host_ip = socket.gethostbyname(host_name)
+        print(host_ip)
         return host_ip
     except:
         print("Unable to get Hostname and IP")
@@ -56,22 +62,30 @@ def writefile(data):
         print("Not able to write to the file")
 
 while True:
-    rcv = ser.read(300)
-    if (str(rcv)[1:] != '\'\''):
-        data = str(rcv)[1:]
-        print(data)
-        #data = 'GW_ID:2,TYPE:T&H,ID:286851425,STAT:00000000,T:25.9\xa1\xe6,H:62.3%,ST:5M,V:3.55v,SN:72,RSSI:-48dBm,S:22.5769,E:113.9712,Time:0-0-0 0:0:0,T_RSSI:-80dBm\r\n'
+    try:
+        rcv = ser.read(300)
+        if (str(rcv)[1:] != '\'\''):
+            data = str(rcv)[1:]
+            print(data)
+            #data = 'GW_ID:2,TYPE:T&H,ID:286851425,STAT:00000000,T:25.9\xa1\xe6,H:62.3%,ST:5M,V:3.55v,SN:72,RSSI:-48dBm,S:22.5769,E:113.9712,Time:0-0-0 0:0:0,T_RSSI:-80dBm\r\n'
+            try:
+                json_data = json.dumps(dataformat(data))
+                writefile(json_data)
+                masterip = str(subprocess.run(["python3", "IsMaster.py"], stdout=subprocess.PIPE).stdout)
+                masterip = masterip[2:-3]
+                currentip = get_Host_name_IP()
+                if str(masterip).strip() == str(currentip).strip(): 
+                    insertdb(json_data)
+                else:
+                    print("i am not master")
+            except Exception as e:
+                print("record error:" + str(e))
+    except:
         try:
-            json_data = json.dumps(dataformat(data))
-            writefile(json_data)
-            masterip = str(subprocess.run(["python3", "IsMaster.py"], stdout=subprocess.PIPE).stdout)
-            masterip = masterip[2:-3]
-            currentip = get_Host_name_IP()
-            if str(masterip).strip() == str(currentip).strip(): 
-                insertdb(json_data)
-            else:
-                print("i am not master")
-        except Exception as e:
-            print("record error:" + str(e))
-
+            time.sleep(10)
+            ser = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
+        except:
+            print ("waiting for gateway")
+	
+	
 
