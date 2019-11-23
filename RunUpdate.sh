@@ -15,11 +15,11 @@ if [ "$masterip" == "$myip" ];then
 
  #Running Script
    echo getting GIT UPDATE....
-  ./GitUpdate.sh > /home/pi/logs/$LogFileNameGitUpd
+  ./GitUpdate.sh >> /home/pi/logs/$LogFileNameGitUpd
   echo Running CheckNewBuild.sh for webapp.....
-  ./CheckNewBuild.sh webapp >/home/pi/logs/$LogFileNameWebApp
+  ./CheckNewBuild.sh webapp >> /home/pi/logs/$LogFileNameWebApp
   echo Running CheckNewBuild.sh for cratedb....
-  ./CheckNewBuild.sh cratedb >/home/pi/logs/$LogFileNameCrateDB 
+  ./CheckNewBuild.sh cratedb >> /home/pi/logs/$LogFileNameCrateDB 
   echo coping Data to other pi ....
  
  
@@ -34,7 +34,7 @@ if [ "$masterip" == "$myip" ];then
 		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.10scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/3 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
@@ -50,7 +50,7 @@ if [ "$masterip" == "$myip" ];then
         
 	   elif [ "$myip" == 192.168.1.102 ];then
                  ./CopyUpdate.sh 192.168.1.101 192.168.1.103  > /home/pi/logs/$LogFileNameCopyUpd
-scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
+
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
