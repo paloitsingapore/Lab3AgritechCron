@@ -6,13 +6,13 @@ do
     cat source_list.txt | while read line || [[ -n $line ]];
     do
      if [[ ! -z $line ]]; then
-      scp  /home/pi/Lab3AgritechCron/$line  pi@$var:/home/pi/Lab3AgritechCron
+      scp  /home/pi/Lab3AgritechCron/$line  pi@$var:/home/pi/Lab3AgritechCron/
      fi
     done
     scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
 
     #Send Docker Image to other Nodes
-    scp -r  /home/pi/bin/DockerImages pi@$var:/home/pi/bin/
+    scp -r  /home/pi/bin/DockerImages pi@$var:/home/pi/bin/DockerImages
     if [ $? -eq 0 ]; then
        ssh -l pi $var /home/pi/Lab3AgritechCron/LoadDockerImage.sh
     else
@@ -22,5 +22,5 @@ do
     echo  Replication Completed ...    
 done
 echo Deleting Docker image fIles 
-sudo rm -r  /home/pi/bin/DockerImages
+sudo rm -r  /home/pi/bin/DockerImages/*
 echo File Deleted....

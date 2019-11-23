@@ -3,7 +3,7 @@ myip=$(ifconfig wlan0 | awk '/inet/  {gsub("addr:","",$2); print $2}' |awk 'NR==
 masterip=$(/usr/bin/python3 IsMaster.py)
 echo My IP $myip
 echo Master IP $masterip
-if [ "$masterip" == "$ip" ];then
+if [ "$masterip" == "$myip" ];then
  Date=$(date +"%F%T")
  #LogFileName ...
  LogFileNameWebApp=agritechpaloit_webapp_CheckNewBuild.$Date.log
@@ -34,7 +34,7 @@ if [ "$masterip" == "$ip" ];then
 		 ./ssh -l pi 192.168.1.102 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #2nd Pi
-		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
+		 ./ssh -l pi 192.168.1.10scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/3 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./ssh -l pi 192.168.1.103 /home/pi/Lab3AgritechCron/RenewContainer.sh lab3agritechpaloit/cratedb >> /home/pi/logs/LogFileNameRenewCont
 		
 		 #3rd Pi
@@ -50,7 +50,7 @@ if [ "$masterip" == "$ip" ];then
         
 	   elif [ "$myip" == 192.168.1.102 ];then
                  ./CopyUpdate.sh 192.168.1.101 192.168.1.103  > /home/pi/logs/$LogFileNameCopyUpd
-
+scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 ./RenewContainer.sh lab3agritechpaloit/webapp >> /home/pi/logs/LogFileNameRenewCont
 		 #1st Pi
