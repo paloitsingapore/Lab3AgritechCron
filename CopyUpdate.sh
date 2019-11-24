@@ -10,7 +10,7 @@ do
      fi
     done
     scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
-
+    ssh -l pi $var chmod -R 755 /home/pi/Lab3AgritechCron/.git
     #Send Docker Image to other Nodes
     scp  /home/pi/bin/DockerImages/* pi@$var:/home/pi/bin/DockerImages/
     if [ $? -eq 0 ]; then
