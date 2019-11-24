@@ -1,5 +1,5 @@
 #!/bin/bash
-myip=$(ifconfig wlan0 | awk '/inet/  {gsub("addr:","",$2); print $2}' |awk 'NR==1{print $1}')
+myip=$(/sbin/ifconfig wlan0 | awk '/inet/  {gsub("addr:","",$2); print $2}' |awk 'NR==1{print $1}')
 masterip=$(/usr/bin/python3 IsMaster.py)
 echo My IP $myip
 echo Master IP $masterip

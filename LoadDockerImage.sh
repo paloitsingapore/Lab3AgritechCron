@@ -1,6 +1,7 @@
 #/bin/bash
 cd /home/pi/bin/DockerImages/
-myip=$(ifconfig wlan0 | awk '/inet/  {gsub("addr:","",$2); print $2}' |awk 'NR==1{print $1}')
+myip=$(/sbin/ifconfig wlan0 | awk '/inet/  {gsub("addr:","",$2); print $2}' |awk 'NR==1{print $1}')
+echo $myip
 for f in *.tar.gz; 
 do 
  echo "Loading  $f file to Docker Image "; 
