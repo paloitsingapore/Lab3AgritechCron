@@ -18,9 +18,9 @@ do
     else
       echo Image transfer not completed
     fi	
-    echo "" > source_list.txt
     echo  Replication Completed ...    
 done
 echo Deleting Docker image fIles 
 sudo rm -r  /home/pi/bin/DockerImages/*
+echo "" > source_list.txt
 echo File Deleted....
