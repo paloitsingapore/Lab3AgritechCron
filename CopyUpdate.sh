@@ -20,6 +20,7 @@ do
     fi	
     echo  Replication Completed ...    
 done
+chmod -R 755 /home/pi/Lab3AgritechCron/.git
 echo Deleting Docker image fIles 
 sudo rm -r  /home/pi/bin/DockerImages/*
 echo "" > source_list.txt
