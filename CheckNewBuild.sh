@@ -1,5 +1,5 @@
 #!/bin/bash
-#Passing arguments to a function like agritechpaloit/webapp ,agrtechpaloit/cratedb
+#testPassing arguments to a function like agritechpaloit/webapp ,agrtechpaloit/cratedb
 repo=$1
 get_latest_version()
 {
