@@ -1,4 +1,3 @@
-#To Upload Data to S3
 #!/usr/bin/python3
 import boto3
 import os
