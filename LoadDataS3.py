@@ -27,7 +27,7 @@ print(t_date)
 with zipfile.ZipFile(log_directory+zip_log, mode='w') as zf:
     for file in os.listdir(log_directory): 
         filename = log_directory + '/' + file
-        if filename.endswith(".log") and t_date not in filename:
+        if filename.endswith(".log"):
             print('Zipping File' + filename)
             zf.write(filename)
 
@@ -36,7 +36,7 @@ print("Log Files zipped in "+zip_log)
 with zipfile.ZipFile(data_directory+zip_data, mode='w') as zf:
     for file in os.listdir(data_directory):
         filename = data_directory + '/' + file
-        if  filename.endswith(".txt") and t_date not in filename :
+        if  filename.endswith(".txt"):
             print("zipping file "+filename)
             zf.write(filename)
 
@@ -45,7 +45,7 @@ print("data file zipped in "+zip_data)
 exit_code_log = 1
 exit_code_data = 1
 print("uploading files to s3....")
-for x in range(30):
+for x in range(2):
     print (x)
     if exit_code_log !=0:
         try:
@@ -78,7 +78,7 @@ for x in range(30):
     if exit_code_data == 0 and exit_code_log == 0:
         break
     else:
-        time.sleep(600)
+        time.sleep(60)
 
 
 if exit_code_log ==1 or exit_code_data ==1:
@@ -99,11 +99,5 @@ for item in data_file:
         os.remove( os.path.join( data_directory, item ) )
 
 print("Zip files removed")
-
-
-
-
-
-
 
 
