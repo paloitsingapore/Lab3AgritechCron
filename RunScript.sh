@@ -1,4 +1,5 @@
 #!/bin/bash
 echo "There is nothing run"
 echo "==========================================================="
-./GarbageCollection.sh
+./home/pi/Lab3AgritechCron/GarbageCollection.sh
+
