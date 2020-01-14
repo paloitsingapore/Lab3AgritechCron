@@ -3,14 +3,8 @@ for var in "$@"
 do
    echo  Replicating GitUpdate and Docker Image tp $var ....
    #Send Script to other nodes
-    cat source_list.txt | while read line || [[ -n $line ]];
-    do
-     if [[ ! -z $line ]]; then
-      scp  /home/pi/Lab3AgritechCron/$line  pi@$var:/home/pi/Lab3AgritechCron/
-     fi
-    done
     ssh -l pi $var chmod -R 777 /home/pi/Lab3AgritechCron/.git
-    scp -r /home/pi/Lab3AgritechCron/.git pi@$var:/home/pi/Lab3AgritechCron/
+    scp -r /home/pi/Lab3AgritechCron pi@$var:/home/pi/ 
     #Send Docker Image to other Nodes
     scp  /home/pi/bin/DockerImages/* pi@$var:/home/pi/bin/DockerImages/
     if [ $? -eq 0 ]; then
