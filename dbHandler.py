@@ -8,8 +8,8 @@ from crate import client
 #cursor.close()
 #connection.close()
 
-def InsertDB(mac_add, time, temperature, humidity):
-    query = "INSERT INTO TH_DATA (MAC_ADD, TIME, TEMPERATURE, HUMIDITY) VALUES ('{}','{}','{}','{}')".format(mac_add,time,temperature, humidity)
+def InsertDB(table, mac_add, time, temperature, humidity):
+    query = "INSERT INTO {} (MAC_ADD, TIME, TEMPERATURE, HUMIDITY) VALUES ('{}','{}','{}','{}')".format(table,mac_add,time,temperature, humidity)
     try:
         connection = client.connect("http://localhost:4200", username="crate")
         cursor = connection.cursor()
@@ -19,3 +19,18 @@ def InsertDB(mac_add, time, temperature, humidity):
     except Exception as e:
         print ("Error: " + e)
 
+
+def GetSensorType(mac_add):
+    query = "SELECT sensor_type FROM SENSOR_INFO WHERE MAC_ADD = '{}'".format(mac_add)
+    try:
+        connection = client.connect("http://localhost:4200", username="crate")
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        return result[0]
+    except Exception as e:
+        print ("Error: " + e)
+
+        

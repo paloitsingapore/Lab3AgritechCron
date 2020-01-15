@@ -53,18 +53,28 @@ def dataformat(data):
 
 
 
-def insertdb(data):
+def insertdb(data, sensor_type):
     try: 
         value = json.loads(data)
-        dbHandler.InsertDB(**value)
+        if (sensor_type == 'AIR'):
+            dbHandler.InsertDB('TH_DATA',**value)
+        if (sensor_type == 'SOIL'):
+            dbHandler.InsertDB('SOIL_DATA',**value)
+
     except Exception as e:
         logging.error("Database Insertion is Fail:" + str(e))
 
-def writefile(data):
+def writefile(data, sensor_type):
     try:
-        file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-THDATA.txt',"a+")
-        file.write(json.dumps(data) + '\n')
-        file.close
+        if(sensor_type == 'AIR'):
+            file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-AIR-THDATA.txt',"a+")
+            file.write(json.dumps(data) + '\n')
+            file.close
+        if(sensor_type == 'SOIL'):
+            file = open(data_path + '/' + datetime.datetime.today().strftime('%Y-%m-%d') + '-SOIL-THDATA.txt',"a+")
+            file.write(json.dumps(data) + '\n')
+            file.close
+
     except Exception as e:
         logging.error("Not able to write to the file:" + str(e))
 
@@ -75,13 +85,15 @@ while True:
             data = str(rcv)[1:]
             #data = 'GW_ID:2,TYPE:T&H,ID:286851425,STAT:00000000,T:25.9\xa1\xe6,H:62.3%,ST:5M,V:3.55v,SN:72,RSSI:-48dBm,S:22.5769,E:113.9712,Time:0-0-0 0:0:0,T_RSSI:-80dBm\r\n'
             try:
-                json_data = json.dumps(dataformat(data))
-                writefile(json_data)
+                value = dataformat(data)
+                json_data = json.dumps(value)
+                sensor_type = dbHandler.GetSensorType(value['mac_add'])
+                writefile(json_data, sensor_type)
                 masterip = str(subprocess.run(["python3", "IsMaster.py"], stdout=subprocess.PIPE).stdout)
                 masterip = masterip[2:-3]
                 currentip = get_Host_name_IP()
                 if str(masterip).strip() == str(currentip).strip(): 
-                    insertdb(json_data)
+                    insertdb(json_data, sensor_type)
                 else:
                     print("i am not master")
             except Exception as e:
