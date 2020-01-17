@@ -9,8 +9,9 @@ status_nok='NOK'
 query_max_time ="select max(load_time) from activity_s3_load where status='OK' "
 query_load ="INSERT INTO activity_s3_load (load_time, status) VALUES ('{}','{}')".format(current_timestamp,status_ok)
 query_load_nok="INSERT INTO activity_s3_load (load_time, status,remark) VALUES ('{}','{}' ,'{}')".format(current_timestamp,'NOK','NO DATA to EXTRACT')
+query_sensors= "SELECT * from SENSORS"
 try:
-    connection = client.connect("http://172.16.14.108:4200", username="crate")
+    connection = client.connect("http://localhost:4200", username="crate")
     cursor = connection.cursor()
     #Getting MAX TIMESTAMP
 
@@ -38,6 +39,20 @@ try:
         cursor.execute(query_load)
     else:
         cursor.execute(query_load_nok)
+
+    #EXTRACTING SENSOR DATA
+    rowcount =0 
+    cursor.execute(query_sensors)
+    rowcount = cursor.rowcount
+    print(rowcount)
+    result = cursor.fetchall()
+    print(result)
+
+    if rowcount > 0:
+        json_string = json.dumps(result)
+        file = open(data_path + '/SENSORS.txt',"w")
+        file.write(json.dumps(json_string) + '\n')
+        file.close    
 
     cursor.close()
     connection.close()
