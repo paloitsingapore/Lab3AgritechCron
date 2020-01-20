@@ -1,5 +1,6 @@
 #!/bin/bash
 date >> /home/pi/logs/poweroff.log
+sleep 120
 cd /home/pi/Lab3AgritechCron
 filedate=$(stat -c %y update_status.txt | cut -d' ' -f1)
 tdate=$(date +%F)

@@ -47,9 +47,10 @@ try:
     print(rowcount)
     result = cursor.fetchall()
     print(result)
+
     if rowcount > 0:
         json_string = json.dumps(result)
-        file = open(data_path + 'SENSORS.txt',"a+")
+        file = open(data_path + '/SENSORS.txt',"w")
         file.write(json.dumps(json_string) + '\n')
         file.close    
 
