@@ -28,5 +28,6 @@ def Switch_On_Device(SID):
         port.write(str.encode("ID=" + SID + ",switch on\r\n"))
     except Exception as e:
         logging.error("Not able to switch on the power" + str(e))
+        raise
 
 
