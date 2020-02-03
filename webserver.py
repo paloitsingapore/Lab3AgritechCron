@@ -9,6 +9,7 @@ import logging.handlers
 import os
 import datetime
 import subprocess
+import time
 from myip import GetIP
 
 handler = logging.handlers.WatchedFileHandler(
@@ -28,13 +29,23 @@ Rstatus='None'
 class Switch(Resource):
     def get(self, status, SID):
         if status == 'ON':
-            switch_on.Switch_On_Device(SID)
-            Rstatus='success'
+            try:
+                switch_on.Switch_On_Device(SID)
+                Rstatus='success'
+            except:
+                Rstatus = 'fail'
+                return{'STATUS':Rstatus}
         elif status == 'OFF':
-            switch_off.Switch_Off_Device(SID)
-            Rstatus='success'
+            try:
+                switch_off.Switch_Off_Device(SID)
+                Rstatus='success'
+            except:
+                Rstatus = 'fail'
+                return{'STATUS':Rstatus}
+                
         else:
             Rstatus='fail'
+        time.sleep(5)
         return{'STATUS':Rstatus}
 
 class Update(Resource):
