@@ -97,6 +97,7 @@ while True:
                 else:
                     print("i am not master")
             except Exception as e:
+                logging.error("record value:" + str(data))
                 logging.error("record error:" + str(e))
     except:
         try:
