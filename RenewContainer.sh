@@ -40,7 +40,7 @@ if [ "$RimageName" != "$AimageName" ]; then
    fi
    if [[ $cont_repo == *"webapp"* ]]; then
      echo Running New Docker Image $AimageName	   
-     sudo docker run -d -p 3000:3000 $AimageName
+     sudo docker run -d -p 3000:3000 -e TZ=Asia/Singapore $AimageName
      echo waiting for 1 min to check container is alive 
      sleep 1m     
      CcontName=$(sudo docker ps | grep $AimageName | awk {'print $2'}) 
@@ -49,7 +49,7 @@ if [ "$RimageName" != "$AimageName" ]; then
       sudo docker rm $AContID    
       echo New Conatiner is not alive $AimageName
       echo Restarting old Conatiner $RimageName
-      sudo docker run -d -p 3000:3000 --restart on-failure $RimageName
+      sudo docker run -d -p 3000:3000 -e TZ=Asia/Singapore --restart on-failure $RimageName
       echo $RimageName started   
      else
       #--restart on-failure     
