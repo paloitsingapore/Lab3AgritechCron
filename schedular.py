@@ -22,8 +22,8 @@ root = logging.getLogger()
 root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
 root.addHandler(handler)
 
-switch_server1_ip = "172.16.14.82"
-switch_server2_ip = "172.16.12.203"
+switch_server1_ip = "192.168.1.103"
+switch_server2_ip = "192.168.1.104"
 
 def sendhttp_request(sensor_id,status, system):
     request_str_1 = ''
