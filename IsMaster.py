@@ -11,7 +11,10 @@ try:
  result_str = str(result)
  result_str= result_str.split(",") 
  ip=result_str[1]
- print(ip[2:-7])
+ if ip[2:-7] == '192.168.1.103':
+     print('192.168.1.102')
+ else:
+     print(ip[2:-7]) 
  cursor.close()
  connection.close()
 except Exception as e:
