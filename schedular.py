@@ -37,7 +37,7 @@ def sendhttp_request(sensor_id,status, system):
     
     try:
         try:
-            response = requests.get(request_str_1)
+            response = requests.get(request_str_1, timeout=10)
             if response.status_code == 200:
                 result = response.json()
                 if result["STATUS"] == 'success':
@@ -45,7 +45,7 @@ def sendhttp_request(sensor_id,status, system):
                     return True
                 elif result["STATUS"] == 'fail':
                     logging.info("Server1 {} is not working. Let's change to another Server {}".format(switch_server1_ip, switch_serve2_ip))
-                    response2 = requests.get(request_str_2)
+                    response2 = requests.get(request_str_2, timeout=10)
                     if response2.return_code == 200:
                         result2 = response2.json()
                         if result2["STATUS"] == 'success':
@@ -59,7 +59,7 @@ def sendhttp_request(sensor_id,status, system):
 
         except:
             logging.info("Server1 {} is not working. Let's change to another Server {}".format(switch_server1_ip, switch_server2_ip))
-            response2 = requests.get(request_str_2)
+            response2 = requests.get(request_str_2, timeout=10)
             if response2.status_code == 200:
                 result2 = response2.json()
                 if result2["STATUS"] == 'success':
