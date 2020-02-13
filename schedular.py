@@ -203,7 +203,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
 	            #startmisting-switch keep on starting  
                 for each in sensor_id:
                     sendhttp_request(each, "start", "FAN")            
-                    time.sleep(30)
+                    time.sleep(60)
                 time.sleep(180)
             elif(temp_now < upper_target_temp  and temp_now > lower_target_temp):
                 time.sleep(60)
