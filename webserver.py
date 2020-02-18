@@ -62,18 +62,15 @@ class Update(Resource):
         
 class Wechat(Resource):
     def get(self,action):
-        value = {}
-        ListOfContainer = dbHandler.GetListContainer()
-        for each_container in ListOfContainer:
-            avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
-            if action == 'temp':
-                value[container_id] = avetemp
-                print('fetch data from db')
-            if action == 'humidity':
-                value[container_id] = avehumid
-                print('fetch data from db')
+        avetemp, avehumid = dbHandler.GetAveTempHumid('01579684047480')
+        if action == 'temp':
+            value = avetemp
+            print('fetch data from db')
+        if action == 'humidity':
+            value = avehumid
+            print('fetch data from db')
             
-        return value
+        return {'VALUE': value}
 
 try:
     api.add_resource(Switch, '/switch/<status>/<SID>')
