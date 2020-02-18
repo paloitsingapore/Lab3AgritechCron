@@ -11,6 +11,8 @@ import datetime
 import subprocess
 import time
 from myip import GetIP
+import dbHandler
+import json
 
 handler = logging.handlers.WatchedFileHandler(
     os.environ.get("LOGFILE", "/home/pi/logs/WEB_ERROR__" + datetime.datetime.today().strftime('%Y-%m-%d') + "_error.log"))
@@ -57,13 +59,29 @@ class Update(Resource):
         else:
             Rstatus = "fail"
         return{'STATUS': Rstatus}
+        
+class Wechat(Resource):
+    def get(self,action):
+        value = {}
+        ListOfContainer = dbHandler.GetListContainer()
+        for each_container in ListOfContainer:
+            avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+            if action == 'temp':
+                value[container_id] = avetemp
+                print('fetch data from db')
+            if action == 'humidity':
+                value[container_id] = avehumid
+                print('fetch data from db')
+            
+        return value
 
 try:
     api.add_resource(Switch, '/switch/<status>/<SID>')
     api.add_resource(Update, '/update')
+    api.add_resource(Wechat, '/wechat/<action>')
 except Exception as e:
     logging.error("Not able to handle the API: " + str(e))
 
 
 if __name__ == '__main__':
-     app.run(host=GetIP(), port=8090)
+     app.run(host='0.0.0.0', port=8090)
