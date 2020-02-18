@@ -18,5 +18,7 @@ fi
 
 if [ "$myip" == 192.168.1.104 ];then
 #./addCron.sh "0-58/2 * * * *"  "cd /home/pi/Lab3AgritechCron; /usr/bin/python3 schedular.py >> /home/pi/logs/schedular_systemlog.log" add;
+./addCron.sh "59 * * * *" "sh /home/pi/Lab3AgritechCron/ngrok_run.sh &" add;
+./addCron.sh "@reboot" "sh /home/pi/Lab3AgritechCron/ngrok_run.sh &" add;
 sed -i 's/localhost/192.168.1.102/g' /home/pi/Lab3AgritechCron/dbHandler.py
 fi
