@@ -132,13 +132,13 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             break;
             
         else:
-            if(humid_now < lower_target_humid):
+            if(avehumid < lower_target_humid):
 	        #startmisting-switch keep on starting  
                 sendhttp_request(sensor_id,"start", "MIST")            
                 time.sleep(180)
-            elif(humid_now > lower_target_humid and humid_now < upper_target_humid):
+            elif(avehumid > lower_target_humid and avehumid < upper_target_humid):
                 time.sleep(60)
-            elif(humid_now > upper_target_humi):
+            elif(avehumid > upper_target_humi):
                 endtime = str(datetime.datetime.now())
                 sendhttp_request(sensor_id, "stop", "MIST") 
                 #update database 
@@ -199,15 +199,15 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
             break;
         
         else:                 
-            if(temp_now > upper_target_temp):
+            if(avetemp > upper_target_temp):
 	            #startmisting-switch keep on starting  
                 for each in sensor_id:
                     sendhttp_request(each, "start", "FAN")            
                     time.sleep(60)
                 time.sleep(180)
-            elif(temp_now < upper_target_temp  and temp_now > lower_target_temp):
+            elif(avetemp < upper_target_temp  and avetemp > lower_target_temp):
                 time.sleep(60)
-            elif(temp_now < lower_target_temp):
+            elif(avetemp < lower_target_temp):
                 endtime = str(datetime.datetime.now())
                 for each in sensor_id:
                     sendhttp_request(each, "stop", "FAN") 
@@ -333,5 +333,4 @@ if __name__ == '__main__':
             logging.info("Fanning System Has Been Activated Automatically")
         else:
             print("No Action is required")
-            logging.info("No Action is required")
             
