@@ -138,7 +138,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
                 time.sleep(180)
             elif(avehumid > lower_target_humid and avehumid < upper_target_humid):
                 time.sleep(60)
-            elif(avehumid > upper_target_humi):
+            elif(avehumid > upper_target_humid):
                 endtime = str(datetime.datetime.now())
                 sendhttp_request(sensor_id, "stop", "MIST") 
                 #update database 
