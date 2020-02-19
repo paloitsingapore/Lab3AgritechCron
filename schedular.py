@@ -89,6 +89,8 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             endtime = str(datetime.datetime.now())
             sendhttp_request(sensor_id, "stop", systemtype)
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
+            url = "http://{}/alert/{}/{} is STOPPED MANUALLY. Current temp is {} and humidity is {}".format(wechat_url, user_id, typing, avetemp, avehumid)
+            requests.get(url)
             time.sleep(60)
             break;
      
@@ -99,6 +101,8 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             sendhttp_request(sensor_id,"stop", systemtype) 
             dbHandler.UpdateContainerStatus(container_id, typing, "false")
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
+            url = "http://{}/alert/{}/{} is STOPPED due to time up. Current temp is {} and humidity is {}".format(wechat_url, user_id, typing, avetemp, avehumid)
+            requests.get(url)
             time.sleep(60)            
             break;
         time.sleep(60)
