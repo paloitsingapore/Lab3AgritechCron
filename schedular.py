@@ -24,6 +24,8 @@ root.addHandler(handler)
 
 switch_server1_ip = "192.168.1.103"
 switch_server2_ip = "192.168.1.104"
+wechat_url = "54.255.187.114"
+user_id = "ok99-wev6t-aZRaAHffRZS1tAP0g"
 
 def sendhttp_request(sensor_id,status, system):
     request_str_1 = ''
@@ -110,6 +112,13 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
     dbHandler.UpdateContainerStatus(container_id, "misting", "true")
     time.sleep(2)
     
+    if manual:
+        url = "http://{}/alert/{}/Misting is STARTED MANUALLY. Current humidity at farm is {}".format(wechat_url, user_id, humid_now)
+        requests.get(url)
+    else:
+        url = "http://{}/alert/{}/Misting is STARTED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, user_id, humid_now)
+        requests.get(url)
+    
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
         currentmisting = dbHandler.GetContainerStatus(container_id, "misting")
@@ -122,6 +131,8 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             sendhttp_request(sensor_id, "stop", "MIST")
             #dbHandler.UpdateContainerStatus(container_id, "misting", "false")
             dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
+            url = "http://{}/alert/{}/Misting is STOPPED MANUALLY. Current humidity at farm is {}".format(wechat_url, user_id, humid_now)
+            requests.get(url)
             time.sleep(30)
             break;
 
@@ -144,6 +155,8 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
                 #update database 
                 dbHandler.UpdateContainerStatus(container_id, "misting", "false")
                 dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
+                url = "http://{}/alert/{}/Misting is STOPPED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, user_id, humid_now)
+                requests.get(url)
                 time.sleep(180)            
                 break;
             else:
@@ -172,6 +185,12 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
     timenow = datetime.datetime.now()
     dbHandler.UpdateContainerStatus(container_id, "fanning", "true")
     time.sleep(2)
+    if manual:
+        url = "http://{}/alert/{}/FANNING is STARTED MANUALLY. Current temperature at farm is {}".format(wechat_url, user_id, temp_now)
+        requests.get(url)
+    else:
+        url = "http://{}/alert/{}/FANNING is STARTED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, user_id, temp_now)
+        requests.get(url)
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
         currentfanning = dbHandler.GetContainerStatus(container_id, "fanning")
@@ -186,6 +205,8 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                 dbHandler.UpdateActivity(int(round(timenow.timestamp())) + int(each), each, endtime, avetemp, avehumid)
                 sendhttp_request(each, "stop", "FAN")            
                 time.sleep(30)
+            url = "http://{}/alert/{}/FANNING is STOPPED MANUALLY. Current temperature at farm is {}".format(wechat_url, user_id, temp_now)
+            requests.get(url)
             #dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
             time.sleep(180)
             break;
@@ -215,6 +236,8 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                 #update database 
                     dbHandler.UpdateActivity(int(round(timenow.timestamp())) + int(each), each, endtime,avetemp, avehumid)
                 dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
+                url = "http://{}/alert/{}/FANNING is STOPPED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, user_id, temp_now)
+                requests.get(url)
                 time.sleep(180)            
                 break;
             else:
