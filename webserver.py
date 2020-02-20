@@ -64,10 +64,10 @@ class Wechat(Resource):
     def get(self,action):
         avetemp, avehumid = dbHandler.GetAveTempHumid('01579684047480')
         if action == 'temp':
-            value = avetemp
+            value = round(avetemp, 1)
             print('fetch data from db')
         if action == 'humidity':
-            value = avehumid
+            value = round(avehumid, 1)
             print('fetch data from db')
             
         return {'VALUE': value}
