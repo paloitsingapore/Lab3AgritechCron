@@ -90,7 +90,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             sendhttp_request(sensor_id, "stop", systemtype)
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
-                url = "http://{}/alert/{}/{} is STOPPED MANUALLY. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, avetemp, avehumid)
+                url = "http://{}/alert/{}/{} is STOPPED MANUALLY. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, round(avetemp, 1), round(avehumid, 1))
                 requests.get(url)
             time.sleep(60)
             break;
@@ -103,7 +103,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             dbHandler.UpdateContainerStatus(container_id, typing, "false")
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
-                url = "http://{}/alert/{}/{} is STOPPED due to time up. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, avetemp, avehumid)
+                url = "http://{}/alert/{}/{} is STOPPED due to time up. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, round(avetemp, 1), round(avehumid, 1))
                 requests.get(url)
             time.sleep(60)            
             break;
@@ -120,11 +120,11 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
     
     if manual:
         for each_user in user_id:
-            url = "http://{}/alert/{}/Misting is STARTED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, humid_now)
+            url = "http://{}/alert/{}/Misting is STARTED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(humid_now, 1))
             requests.get(url)
     else:
         for each_user in user_id:
-            url = "http://{}/alert/{}/Misting is STARTED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, humid_now)
+            url = "http://{}/alert/{}/Misting is STARTED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(humid_now, 1))
             requests.get(url)
     
     while True:
@@ -140,7 +140,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             #dbHandler.UpdateContainerStatus(container_id, "misting", "false")
             dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
-                url = "http://{}/alert/{}/Misting is STOPPED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, avehumid)
+                url = "http://{}/alert/{}/Misting is STOPPED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(avehumid, 1))
                 requests.get(url)
             time.sleep(30)
             break;
@@ -165,7 +165,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
                 dbHandler.UpdateContainerStatus(container_id, "misting", "false")
                 dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
                 for each_user in user_id:
-                    url = "http://{}/alert/{}/Misting is STOPPED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, avehumid)
+                    url = "http://{}/alert/{}/Misting is STOPPED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(avehumid, 1))
                     requests.get(url)
                 time.sleep(180)            
                 break;
@@ -197,11 +197,11 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
     time.sleep(2)
     if manual:
         for each_user in user_id:
-            url = "http://{}/alert/{}/FANNING is STARTED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, temp_now)
+            url = "http://{}/alert/{}/FANNING is STARTED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(temp_now, 1))
             requests.get(url)
     else:
         for each_user in user_id:
-            url = "http://{}/alert/{}/FANNING is STARTED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, temp_now)
+            url = "http://{}/alert/{}/FANNING is STARTED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(temp_now, 1))
             requests.get(url)
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
@@ -218,7 +218,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                 sendhttp_request(each, "stop", "FAN")            
                 time.sleep(30)
             for each_user in user_id:    
-                url = "http://{}/alert/{}/FANNING is STOPPED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, avetemp)
+                url = "http://{}/alert/{}/FANNING is STOPPED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(avetemp, 1))
                 requests.get(url)
             #dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
             time.sleep(180)
@@ -250,7 +250,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                     dbHandler.UpdateActivity(int(round(timenow.timestamp())) + int(each), each, endtime,avetemp, avehumid)
                 dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
                 for each_user in user_id:
-                    url = "http://{}/alert/{}/FANNING is STOPPED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, avetemp)
+                    url = "http://{}/alert/{}/FANNING is STOPPED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(avetemp, 1))
                     requests.get(url)
                 time.sleep(180)            
                 break;
