@@ -13,6 +13,9 @@ import logging
 import logging.handlers
 import os
 
+import switch_on
+import switch_off
+
 handler = logging.handlers.WatchedFileHandler(
     os.environ.get("LOGFILE", "/home/pi/logs/BRAIN_" + datetime.datetime.today().strftime('%Y-%m-%d') + "_error.log"))
 formatter = logging.Formatter('{asctime} {name} {levelname:8s} {message}',style='{')
@@ -25,9 +28,22 @@ root.addHandler(handler)
 switch_server1_ip = "192.168.1.103"
 switch_server2_ip = "192.168.1.104"
 wechat_url = "54.255.187.114"
-user_id = ["ok99-wev6t-aZRaAHffRZS1tAP0g","ok99-wWEUEanEXFDBjxsd1vH7Rvo"]
+user_id = ["ok99-wWEUEanEXFDBjxsd1vH7Rvo","ok99-wev6t-aZRaAHffRZS1tAP0g"]
 
-def sendhttp_request(sensor_id,status, system):
+def sendhttp_request(sensor_id,status,system):
+    try:
+        if status == "start":
+            switch_on.Switch_On_Device(sensor_id)
+        if status == "stop":
+            switch_off.Switch_Off_Device(sensor_id)
+
+        logging.info("{} SWITCH ID: {} HAS BEEN {}ed".format(system, sensor_id, status))
+    except Exception as e:
+        logging.error("SWITCH NOT WORKING. ERROR: " + str(e))  
+         
+    
+    
+def sendhttp_request2(sensor_id,status, system):
     request_str_1 = ''
     request_str_2 = ''
     if status == "start":
