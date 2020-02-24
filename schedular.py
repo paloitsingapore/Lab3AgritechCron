@@ -25,7 +25,7 @@ root.addHandler(handler)
 switch_server1_ip = "192.168.1.103"
 switch_server2_ip = "192.168.1.104"
 wechat_url = "54.255.187.114"
-user_id = ["ok99-wev6t-aZRaAHffRZS1tAP0g"]
+user_id = ["ok99-wev6t-aZRaAHffRZS1tAP0g","ok99-wWEUEanEXFDBjxsd1vH7Rvo"]
 
 def sendhttp_request(sensor_id,status, system):
     request_str_1 = ''
