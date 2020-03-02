@@ -107,7 +107,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
                 url = "http://{}/alert/{}/{} is STOPPED MANUALLY. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, round(avetemp, 1), round(avehumid, 1))
-                requests.get(url)
+                requests.get(url, timeout=2)
             time.sleep(60)
             break;
      
@@ -120,7 +120,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
                 url = "http://{}/alert/{}/{} is STOPPED due to time up. Current temp is {} and humidity is {}".format(wechat_url, each_user, typing, round(avetemp, 1), round(avehumid, 1))
-                requests.get(url)
+                requests.get(url, timeout=2)
             time.sleep(60)            
             break;
         time.sleep(60)
@@ -137,11 +137,11 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
     if manual:
         for each_user in user_id:
             url = "http://{}/alert/{}/Misting is STARTED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(humid_now, 1))
-            requests.get(url)
+            requests.get(url, timeout=2)
     else:
         for each_user in user_id:
             url = "http://{}/alert/{}/Misting is STARTED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(humid_now, 1))
-            requests.get(url)
+            requests.get(url, timeout=2)
     
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
@@ -157,7 +157,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
             for each_user in user_id:
                 url = "http://{}/alert/{}/Misting is STOPPED MANUALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(avehumid, 1))
-                requests.get(url)
+                requests.get(url, timeout=2)
             time.sleep(30)
             break;
 
@@ -182,8 +182,8 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
                 dbHandler.UpdateActivity(timenow, sensor_id, endtime, avetemp, avehumid)
                 for each_user in user_id:
                     url = "http://{}/alert/{}/Misting is STOPPED AUTOMATICALLY. Current humidity at farm is {}".format(wechat_url, each_user, round(avehumid, 1))
-                    requests.get(url)
-                time.sleep(180)            
+                    requests.get(url, timeout=2)
+                time.sleep(60)            
                 break;
             else:
                 print("testing")        
@@ -201,7 +201,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             else:
                 alert("Please check the misting")
             
-        time.sleep(100)
+        time.sleep(60)
         
             
 def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,sensor_id, manual=False, time_duration=0):
@@ -214,11 +214,11 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
     if manual:
         for each_user in user_id:
             url = "http://{}/alert/{}/FANNING is STARTED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(temp_now, 1))
-            requests.get(url)
+            requests.get(url, timeout=2)
     else:
         for each_user in user_id:
             url = "http://{}/alert/{}/FANNING is STARTED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(temp_now, 1))
-            requests.get(url)
+            requests.get(url, timeout=2)
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
         currentfanning = dbHandler.GetContainerStatus(container_id, "fanning")
@@ -235,7 +235,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                 time.sleep(30)
             for each_user in user_id:    
                 url = "http://{}/alert/{}/FANNING is STOPPED MANUALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(avetemp, 1))
-                requests.get(url)
+                requests.get(url, timeout=2)
             #dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
             time.sleep(180)
             break;
@@ -267,8 +267,8 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
                 dbHandler.UpdateContainerStatus(container_id, "fanning", "false")
                 for each_user in user_id:
                     url = "http://{}/alert/{}/FANNING is STOPPED AUTOMATICALLY. Current temperature at farm is {}".format(wechat_url, each_user, round(avetemp, 1))
-                    requests.get(url)
-                time.sleep(180)            
+                    requests.get(url, timeout=2)
+                time.sleep(60)            
                 break;
             else:
                 print("testing")        
@@ -285,7 +285,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
             else:
                 alert("Please check the fanning")
             
-        time.sleep(100)
+        time.sleep(60)
         
 
 def stopfanning(container_id, fan_id):
@@ -367,7 +367,7 @@ if __name__ == '__main__':
             dbHandler.UpdateContainerStatus(each_container, "fanning", "false")
             time.sleep(20)
             dbHandler.UpdateContainerStatus(each_container, "misting", "true")
-            time.sleep(300)       
+            time.sleep(60)       
             p = Process(target=startmisting, args=(each_container, avehumid, stop_humid, start_humid,mist_id, ))
             p.start()
             logging.info("Fanning System Has Been Deactivated Automatically AND Misting System Has Been Activated Automatically.")
