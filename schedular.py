@@ -34,8 +34,12 @@ def sendhttp_request(sensor_id,status,system):
     try:
         if status == "start":
             switch_on.Switch_On_Device(sensor_id)
+	    time.sleep(5)
+	    switch_on.Switch_On_Device(sensor_id)
         if status == "stop":
             switch_off.Switch_Off_Device(sensor_id)
+	    time.sleep(5)
+	    switch_off.Switch_Off_Device(sensor_id)
 
         logging.info("{} SWITCH ID: {} HAS BEEN {}ed".format(system, sensor_id, status))
     except Exception as e:
