@@ -63,14 +63,12 @@ class Update(Resource):
 class Wechat(Resource):
     def get(self,action):
         avetemp, avehumid = dbHandler.GetAveTempHumid('01579684047480')
-        if action == 'temp':
-            value = round(avetemp, 1)
-            print('fetch data from db')
-        if action == 'humidity':
-            value = round(avehumid, 1)
+        if action == 'now':
+            temp = round(avetemp, 1)
+            humid = round(avehumid, 1)
             print('fetch data from db')
             
-        return {'VALUE': value}
+        return {'temp': temp, 'humid':humid}
 
 try:
     api.add_resource(Switch, '/switch/<status>/<SID>')
