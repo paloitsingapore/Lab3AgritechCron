@@ -6,7 +6,7 @@ import time
 import logging
 import logging.handlers
 import os
-
+import persistqueue
 #SID=sys.argv[1]
 
 handler = logging.handlers.WatchedFileHandler(
@@ -20,10 +20,13 @@ root.addHandler(handler)
 
 def Switch_On_Device(SID):
     try:
-        port = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
-        port.close()
-        port.open()
-        port.write(str.encode("ID=" + SID + ",switch on\r\n"))
+        #port = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3.0)
+        #port.close()
+        #port.open()
+        #port.write(str.encode("ID=" + SID + ",switch on\r\n"))
+        q = persistqueue.SQLiteQueue('run-switch', auto_commit=True)
+        q.put("ID=" +  SID  +",switch on\r\n")
+        logging.info("Adding Switch on command for SID "+ SID +" in Queue" )
 
 
     except Exception as e:

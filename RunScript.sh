@@ -14,6 +14,8 @@ fi
 if [ "$myip" == 192.168.1.103 ];then
 #./addCron.sh "1-59/2 * * * *"  "cd /home/pi/Lab3AgritechCron; /usr/bin/python3 schedular.py >> /home/pi/logs/schedular_systemlog.log" add;
 ./addCron.sh "* * * * *"  "cd /home/pi/Lab3AgritechCron; /usr/bin/python3 schedular.py >> /home/pi/logs/schedular_systemlog.log" add;
+./addCron.sh "@reboot" "cd /home/pi/Lab3AgritechCron; sudo rm -r -f run-switch"
+./addCron.sh "@reboot" "/usr/bin/python3 /home/pi/Lab3AgritechCron/cleanupsys.py"
 fi
 
 if [ "$myip" == 192.168.1.104 ];then
