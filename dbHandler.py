@@ -190,3 +190,16 @@ def ClearUserActions(pid, status, remark):
         connection.close()
     except Exception as e:
         print ("Error: " + str(e))
+        
+def GetGraphData(date):
+    query = "SELECT DATE_TRUNC('hour', time) AS day, avg(temperature) as temp, avg(humidity) as humidity FROM TH_data WHERE  time < '2020-02-19' and time > '2020-02-18' GROUP BY 1 ORDER BY 1 DESC"
+    try:
+        connection = client.connect("http://localhost:4200", username="crate")
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return result
+    except Exception as e:
+        print ("Error: " + str(e))
