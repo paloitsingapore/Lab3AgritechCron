@@ -60,6 +60,34 @@ def GetContainerInfo(container_id):
     except Exception as e:
         print ("Error: " + e)
 
+
+def GetContainerHumidInfo(container_id):
+    query = "SELECT humidity_setup end_point_humid, humidity_setup - humidity_range start_point_humid FROM containers WHERE id = '{}'".format(container_id)     
+    try:
+        connection = client.connect("http://localhost:4200", username="crate")
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        return result[0], result[1]
+    except Exception as e:
+        print ("Error: " + e)
+
+
+def GetContainerTempInfo(container_id):
+    query = "SELECT temperature_setup end_point_temp, temperature_setup + temperature_range  start_point_temp FROM containers WHERE id = '{}'".format(container_id)     
+    try:
+        connection = client.connect("http://localhost:4200", username="crate")
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        return result[0], result[1]
+    except Exception as e:
+        print ("Error: " + e)
+
 def GetContainerStatus(container_id, system_type):
     query = "SELECT {} FROM containers WHERE id = '{}'".format(system_type, container_id)
     try:
@@ -188,5 +216,18 @@ def ClearUserActions(pid, status, remark):
         cursor.execute(query)
         cursor.close()
         connection.close()
+    except Exception as e:
+        print ("Error: " + str(e))
+
+def GetGraphData(date):
+    query = "SELECT DATE_TRUNC('hour', time) AS day, avg(temperature) as temp, avg(humidity) as humidity FROM TH_data WHERE  time < '2020-02-19' and time > '2020-02-18' GROUP BY 1 ORDER BY 1 DESC"
+    try:
+        connection = client.connect("http://localhost:4200", username="crate")
+        cursor = connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return result
     except Exception as e:
         print ("Error: " + str(e))

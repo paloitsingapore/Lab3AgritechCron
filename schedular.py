@@ -135,7 +135,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
             break;
         time.sleep(30)
 	    
-def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid,sensor_id, manual=False, time_duration=0):
+def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid, sensor_id, manual=False, time_duration=0):
     index = 0
     indexofstart = True
     beforehumid=0
@@ -162,6 +162,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
     
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+        upper_target_humid, lower_target_humid = dbHandler.GetContainerHumidInfo(each_container)
         currentmisting = dbHandler.GetContainerStatus(container_id, "misting")
         if indexofstart:
             dbHandler.InsertActivity(timenow, sensor_id, timenow, "MIST", avetemp, avehumid)
@@ -226,7 +227,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
         time.sleep(20)
         
             
-def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,sensor_id, manual=False, time_duration=0):
+def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp, sensor_id, manual=False, time_duration=0):
     index = 0
     indexofstart = True
     beforetemp=100
@@ -252,6 +253,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp,se
             print("error with wechat sending")
     while True:
         avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+        upper_target_temp, lower_target_temp = dbHandler.GetContainerHumidInfo(container_id)
         currentfanning = dbHandler.GetContainerStatus(container_id, "fanning")
         if indexofstart:
             for each in sensor_id:
@@ -421,4 +423,5 @@ if __name__ == '__main__':
             logging.info("Fanning System Has Been Activated Automatically")
         else:
             print("No Action is required")
+
             
