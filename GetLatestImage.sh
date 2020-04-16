@@ -2,8 +2,7 @@
 
 
 # set username and password
-UNAME="lab3agritechpaloit"
-UPASS="paloit"
+source ./cred.sh 
 key="$1"
 
 # get token to be able to talk to Docker Hub
