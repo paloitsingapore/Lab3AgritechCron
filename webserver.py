@@ -15,8 +15,7 @@ import dbHandler
 import json
 import boto3
 
-handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "/home/pi/logs/WEB_ERROR__" + datetime.datetime.today().strftime('%Y-%m-%d') + "_error.log"))
+handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE","/home/pi/logs/wechat" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
 formatter = logging.Formatter('{asctime} {name} {levelname:8s} {message}',style='{')
 #formatter = logging.Formatter(logging.BASIC_FORMAT)
 handler.setFormatter(formatter)
@@ -60,7 +59,7 @@ class Switch(Resource):
 class Update(Resource):
     def get(self):
         result = subprocess.run('./RunUpdate.sh')
-        print (result.returncode)
+        logging.info(result.returncode)
         if result.returncode == 0:
             Rstatus = 'success'
         else:
@@ -73,7 +72,7 @@ class Wechat(Resource):
             avetemp, avehumid = dbHandler.GetAveTempHumid('01579684047480')
             temp = round(avetemp, 1)
             humid = round(avehumid, 1)
-            print('fetch data from db')
+            logging.info('fetch data from db')
             
             return {'temp': temp, 'humid':humid}
 
@@ -84,8 +83,8 @@ class Wechat(Resource):
 class Setting(Resource):
     def get(self, action, sign, value):
         if action == 'temp':
-            print(sign)
-            print(value)
+            logging.info(sign)
+            logging.info(value)
             return {'status': 'success'}
         if action == 'humid':
             return {'status': 'success'}
@@ -97,11 +96,10 @@ class Graph(Resource):
             flag = True
             current_time = str(i).zfill(2)
             time_value.append(current_time + ':00')
-            print(current_time)
+            logging.info(current_time)
             for each in result:
-                #print(each[0]/1000)
-                current_date = datetime.fromtimestamp(int(each[0])/1000).strftime('%H')
-                print(current_date)
+               current_date = datetime.fromtimestamp(int(each[0])/1000).strftime('%H')
+                logging.info(current_date)
                 if (str(current_time) == str(current_date)):
                     flag = False
                     tmp_value.append(int(each[1]))
@@ -126,6 +124,7 @@ class Graph(Resource):
             
 
 try:
+    logging.info("Inside webpsever")
     api.add_resource(Switch, '/switch/<status>/<SID>')
     api.add_resource(Update, '/update')
     api.add_resource(Wechat, '/wechat/<action>')
