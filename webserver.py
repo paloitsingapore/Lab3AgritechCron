@@ -99,8 +99,8 @@ class Graph(Resource):
             logging.info(current_time)
             for each in result:
                current_date = datetime.fromtimestamp(int(each[0])/1000).strftime('%H')
-                logging.info(current_date)
-                if (str(current_time) == str(current_date)):
+               logging.info(current_date)
+               if (str(current_time) == str(current_date)):
                     flag = False
                     tmp_value.append(int(each[1]))
                     hum_value.append(int(each[2]))
