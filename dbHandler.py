@@ -103,7 +103,7 @@ def GetContainerStatus(container_id, system_type):
         
     
 def GetAveTempHumid(container_id):
-    query = "select avg(temperature) ,AVG (humidity) from th_data t1 , (select max(time)  time ,mac_Add from th_data  where mac_Add in (select macadd from  sensors where container  in ('{}'))group by mac_Add) t2  where t1.mac_add = t2.mac_Add and t1.time= t2.time;".format(container_id)
+    query = "select avg(temperature) , avg(humidity), date_format(MAX(T1.TIME)) from th_data t1 , (select max(time)  time ,mac_Add from th_data  where mac_Add in (select macadd from  sensors where container  in ('{}'))group by mac_Add) t2  where t1.mac_add = t2.mac_Add and t1.time= t2.time;".format(container_id)
     try:
         connection = client.connect("http://localhost:4200", username="crate")
         cursor = connection.cursor()
@@ -111,7 +111,7 @@ def GetAveTempHumid(container_id):
         result = cursor.fetchone()
         cursor.close()
         connection.close()
-        return result[0], result[1]
+        return result[0], result[1], result[2]
     except Exception as e:
         print ("Error: " + e)
         

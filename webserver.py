@@ -15,7 +15,7 @@ import dbHandler
 import json
 import boto3
 
-handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE","/home/pi/logs/wechat" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
+handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE","/home/prabakar/logs/wechat" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
 formatter = logging.Formatter('{asctime} {name} {levelname:8s} {message}',style='{')
 #formatter = logging.Formatter(logging.BASIC_FORMAT)
 handler.setFormatter(formatter)
@@ -69,13 +69,11 @@ class Update(Resource):
 class Wechat(Resource):
     def get(self,action):
         if action == 'now':
-            avetemp, avehumid = dbHandler.GetAveTempHumid('01579684047480')
+            avetemp, avehumid, ts = dbHandler.GetAveTempHumid('01579684047480')
             temp = round(avetemp, 1)
             humid = round(avehumid, 1)
-            logging.info('fetch data from db')
-            
-            return {'temp': temp, 'humid':humid}
-
+            logging.info('fetch data from db')         
+            return {'temp': temp, 'humid':humid, 'ts': ts}
         if action == 'config':
             start_humid, stop_humid, start_temp, stop_temp, fan_id, mist_id, fanning, auto_fanning, misting, auto_misting = dbHandler.GetContainerInfo('01579684047480')
             return {'hightemp': round(start_temp,1), 'lowtemp':round(stop_temp,1), 'highhumid':round(stop_humid,1), 'lowhumid':round(start_humid,1)}
@@ -124,7 +122,7 @@ class Graph(Resource):
             
 
 try:
-    logging.info("Inside webpsever")
+    logging.info("Inside webserver")
     api.add_resource(Switch, '/switch/<status>/<SID>')
     api.add_resource(Update, '/update')
     api.add_resource(Wechat, '/wechat/<action>')
