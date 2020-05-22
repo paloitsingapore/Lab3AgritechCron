@@ -15,7 +15,7 @@ import dbHandler
 import json
 import boto3
 
-handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE","/home/prabakar/logs/wechat" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
+handler = logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE","/home/pi/logs/wechat" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
 formatter = logging.Formatter('{asctime} {name} {levelname:8s} {message}',style='{')
 #formatter = logging.Formatter(logging.BASIC_FORMAT)
 handler.setFormatter(formatter)
