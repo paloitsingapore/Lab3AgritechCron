@@ -1,0 +1,10 @@
+{
+    "id": "342345662",
+    "type": "Analog",
+    "manufacturer": "THINGSEND",
+    "productCode": "SMODEL",
+    "name": "Sensor02",
+    "description": "Sensor 02",
+    "sensorModelId": "a96fe27d-6a8a-4d52-9534-a669e2085a14",
+    "deviceId": "452fe528-1c0c-4dc3-bbf3-ab9d1338c2cc"
+}

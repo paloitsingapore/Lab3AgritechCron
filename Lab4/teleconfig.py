@@ -1,0 +1,2 @@
+EVENTHUBCONNECTIONSTRING = "Endpoint=sb://sensor-partner-eh-namespace-zzw3a.servicebus.windows.net/;SharedAccessKeyName=1318008f-5c88-493d-9458-59b57e3b15ac;SharedAccessKey=b03Hn0Efi3/uSomma+6j8ii4KftjgyLbJwqmXxS1wiQ=;EntityPath=sensor-partner-eh-00"
+EVENTHUBNAME = "sensor-partner-eh-00"

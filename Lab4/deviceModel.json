@@ -1,0 +1,6 @@
+{
+  "type": "Node",
+  "productCode": "THSOIL002",
+  "ports": [{ "name": "port1", "type": "Analog" }],
+  "name": "DeviceModel01"
+}

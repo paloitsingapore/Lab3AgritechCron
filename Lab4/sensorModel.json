@@ -1,0 +1,17 @@
+{
+    "id" : "34234531",
+    "type": "Analog",
+    "manufacturer": "XYZ COMPANY",
+    "sensorMeasures" : [ {
+        "unit" : "Celsius",
+        "depth" : 0.8008281904610115,
+        "dataType" : "Double",
+        "name" : "humid",
+        "description" : "Temperature",
+        "type" : "SoilMoisture"
+      }],
+    "productCode": "SMODEL",
+    "name": "SensorModel02",
+    "description": "SensorModel02"
+  }
+  

@@ -1,0 +1,25 @@
+{
+    "deviceid": "8eea289f-e524-4170-9695-97bd338bcc28",
+    "timestamp": "2020-05-28T12:03:45.37836722Z",
+    "version": "1",
+    "sensors": [
+        {
+            "id": "41e34d98-c7a9-40cd-80f0-e42664a84000",
+            "sensordata": [
+                {
+                    "timestamp": "2020-05-28T12:03:45.37836722Z",
+                    "temp_avg": 54
+                }
+            ]
+        },
+        {
+            "id": "8184dcc4-22ee-4c52-a067-0ba4d01bf16e",
+            "sensordata": [
+                {
+                    "timestamp": "2020-05-28T12:03:45.37836722Z",
+                    "test1": 58
+                }
+            ]
+        }
+    ]
+}
