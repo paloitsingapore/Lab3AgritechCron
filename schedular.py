@@ -33,13 +33,13 @@ user_id = ["ok99-wWEUEanEXFDBjxsd1vH7Rvo","ok99-wev6t-aZRaAHffRZS1tAP0g"]
 def sendhttp_request(sensor_id,status,system):
     try:
         if status == "start":
-            switch_on.Switch_On_Device(sensor_id)
+            switch_on.Switch_On_Device(sensor_id, system)
             time.sleep(10)
-            switch_on.Switch_On_Device(sensor_id)
+            switch_on.Switch_On_Device(sensor_id, system)
         if status == "stop":
-            switch_off.Switch_Off_Device(sensor_id)
+            switch_off.Switch_Off_Device(sensor_id, system)
             time.sleep(10)
-            switch_off.Switch_Off_Device(sensor_id)
+            switch_off.Switch_Off_Device(sensor_id, system)
 
         logging.info("{} SWITCH ID: {} HAS BEEN {}ed".format(system, sensor_id, status))
     except Exception as e:
@@ -105,7 +105,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
         current_time = datetime.datetime.now()
         if(not currentmisting):
             dbHandler.UpdateUserActions('2', systemtype, 'true', container_id, '1')
-            avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+            avetemp, avehumid, ts = dbHandler.GetAveTempHumid(container_id)
             endtime = str(datetime.datetime.now())
             sendhttp_request(sensor_id, "stop", systemtype)
             dbHandler.UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumid)
@@ -120,7 +120,7 @@ def Timechecking(time_min, container_id, sensor_id, activity_id, typing, systemt
      
         if current_time > target_time:
             dbHandler.UpdateUserActions('2', systemtype, 'true', container_id, '1')
-            avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+            avetemp, avehumid, ts = dbHandler.GetAveTempHumid(container_id)
             endtime = str(datetime.datetime.now())
             sendhttp_request(sensor_id,"stop", systemtype) 
             dbHandler.UpdateContainerStatus(container_id, typing, "false")
@@ -161,7 +161,7 @@ def startmisting(container_id, humid_now, upper_target_humid, lower_target_humid
             print("error with wechat sending")
     
     while True:
-        avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+        avetemp, avehumid, ts = dbHandler.GetAveTempHumid(container_id)
         upper_target_humid, lower_target_humid = dbHandler.GetContainerHumidInfo(each_container)
         currentmisting = dbHandler.GetContainerStatus(container_id, "misting")
         if indexofstart:
@@ -252,7 +252,7 @@ def startfanning(container_id, temp_now, upper_target_temp, lower_target_temp, s
         except:
             print("error with wechat sending")
     while True:
-        avetemp, avehumid = dbHandler.GetAveTempHumid(container_id)
+        avetemp, avehumid, ts = dbHandler.GetAveTempHumid(container_id)
         upper_target_temp, lower_target_temp = dbHandler.GetContainerHumidInfo(container_id)
         currentfanning = dbHandler.GetContainerStatus(container_id, "fanning")
         if indexofstart:
@@ -348,7 +348,7 @@ if __name__ == '__main__':
     ListOfContainer = dbHandler.GetListContainer()
     for each_container in ListOfContainer:
         start_humid, stop_humid, start_temp, stop_temp, fan_id, mist_id, fanning, auto_fanning, misting, auto_misting = dbHandler.GetContainerInfo(each_container)
-        avetemp, avehumid = dbHandler.GetAveTempHumid(each_container)
+        avetemp, avehumid, ts = dbHandler.GetAveTempHumid(each_container)
         should_misting, should_fanning = ShoudStartFanMist(start_humid, start_temp, avetemp, avehumid)
         fan_id_list = fan_id.split(',')
         
