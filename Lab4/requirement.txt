@@ -1,0 +1,4 @@
+msal
+requests
+azure-eventhub==1.3.*
+azure-mgmt-sql
