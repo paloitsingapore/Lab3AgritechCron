@@ -65,7 +65,7 @@ flask-restful-swagger==0.20.1
 flask-swagger-ui==3.25.0
 fusepy==3.0.1
 gunicorn==19.9.0
-httplib2==0.9.2
+httplib2==0.18.0
 hyperlink==17.3.1
 idna==2.9
 importlib-metadata==1.6.0
