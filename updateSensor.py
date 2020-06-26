@@ -1,38 +1,24 @@
-import os
-import sys
 import datetime
-import subprocess
-from crate import client
-from myip import GetIP 
 import dbHandler
 import time
-import math
-import pytz
 import timeConvert
 import logging
-import logging.handlers
-import os
+import logHandler 
+import fmtLocal
 
-import switch_on
-import switch_off
-
-handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "/home/pi/logs/sensor_status_" + datetime.datetime.today().strftime('%Y-%m-%d') + ".log"))
-formatter = logging.Formatter('{asctime} {name} {levelname:8s} {message}',style='{')
-handler.setFormatter(formatter)
-root = logging.getLogger()
-root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
-root.addHandler(handler)
+logHandler.run("sensor_status")
 
 def check(container):
     timestamp_n = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     logging.info(timestamp_n)
     container = dbHandler.GetListContainer()
-    container = str(container).replace('[','').replace(']','').replace('\'', '')
+    container = fmtLocal.remSqBQ(str(container)) 
+    logging.info(container)
     mac_list = dbHandler.GetMac(container)
+    logging.info(mac_list)
     delta = 0
     for mac in mac_list:
-        mac = str(mac).replace('[','').replace(']','').replace('\'', '')
+        mac = fmtLocal.remSqBQ(str(mac))
         logging.info("MAC Address: " + str(mac))
         latest_ts = dbHandler.GetSensorTsLatest(mac)
         delta = timeConvert.getDelta(ts_1=latest_ts,ts_2=timestamp_n, dt="min")
@@ -41,9 +27,8 @@ def check(container):
         if delta > 15:  
             dbHandler.UpdateSensor(mac,container,"deactivate")
         elif delta < 15:
-            dbHandler.UpdateSensor(mac,container,"activate")
-        
-        logging.info("Last updated timestamp: " + str(latest_ts))
+            dbHandler.UpdateSensor(mac,container,"activate")   
+        logging.info("Last updated sensor ts: " + str(latest_ts))
     if delta > 0 :
         return 1
     else:
