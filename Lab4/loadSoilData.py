@@ -2,8 +2,10 @@ import os
 import json
 from datetime import datetime
 from azure.cosmosdb.table.tableservice import TableService
-
-table_service = TableService(account_name='irrigation6862843155', account_key='ANCWDTPTsnseCsZGyibl53f5IwMl6UJOzFqVkBzxsZjhjxgw+wfV1P+m+ndJQ73lD2MdM8wE/d9M7gNJQNkORA==')
+import access
+account_name= 'irrigation6862843155'
+account_key = access.get_key(account_name)
+table_service = TableService(account_name, account_key)
 table_name = 'SoilData'
 
 def run():
