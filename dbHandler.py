@@ -118,6 +118,14 @@ def GetMac(container_id):
     except Exception as e:
         logging.info("Error: " + e)   
 
+def GetMacAll():
+    query = "select distinct(macadd) from sensors;"
+    try:
+        result = dbFetchAll(query)
+        return result
+    except Exception as e:
+        logging.info("Error: " + e)   
+
 def GetSystemStatus(system_type, container_id, status, active):
     query = "SELECT count(*) FROM user_action WHERE status in {} AND system_type = '{}' AND container_id = '{}' AND activating = '{}'".format(status, system_type, container_id, active)
     try:
@@ -198,8 +206,8 @@ def UpdateActivity(activity_id, sensor_id, endtime, avetemp, avehumi):
     except Exception as e:
         logging.info("Error: " + e)
 
-def UpdateSensor(mac_add, container_id, status):
-    query = "UPDATE sensors set status = '{}' where macadd = '{}' and container = '{}'".format(status, mac_add, container_id)
+def UpdateSensor(mac_add, status):
+    query = "UPDATE sensors set status = '{}' where macadd = '{}'".format(status, mac_add)
     logging.info(query)
     try:
         dbAlter(query)

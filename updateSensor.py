@@ -8,13 +8,10 @@ import fmtLocal
 
 logHandler.run("sensor_status")
 
-def check(container):
+def check():
     timestamp_n = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     logging.info(timestamp_n)
-    container = dbHandler.GetListContainer()
-    container = fmtLocal.remSqBQ(str(container)) 
-    logging.info(container)
-    mac_list = dbHandler.GetMac(container)
+    mac_list = dbHandler.GetMacAll()
     logging.info(mac_list)
     delta = 0
     for mac in mac_list:
@@ -24,10 +21,10 @@ def check(container):
         delta = timeConvert.getDelta(ts_1=latest_ts,ts_2=timestamp_n, dt="min")
         delta = round(delta,1)
         logging.info(str(delta)+ " Min")
-        if delta > 15:  
-            dbHandler.UpdateSensor(mac,container,"deactivate")
-        elif delta < 15:
-            dbHandler.UpdateSensor(mac,container,"activate")   
+        if delta > 30:  
+            dbHandler.UpdateSensor(mac,"deactivate")
+        elif delta < 30:
+            dbHandler.UpdateSensor(mac,"activate")   
         logging.info("Last updated sensor ts: " + str(latest_ts))
     if delta > 0 :
         return 1
@@ -35,6 +32,5 @@ def check(container):
         return 0
 
 if __name__ == '__main__':
-    container = dbHandler.GetListContainer()
-    result = check(container)
+    result = check()
     logging.info(str(result))
