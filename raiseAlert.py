@@ -45,9 +45,9 @@ if __name__ == '__main__':
             logging.info('temp->' + str(avetemp) + ' humid->' + str(avehumid) + ' alert_type ->' + str(alert_type) + ' warning_value->' + str(warning_value) + ' critical_value->' + str(critical_value)
             + ' warning_sent->' + str(warning_sent) + ' critical_sent->' + str(critical_sent))
             alarm_type, direction, measure_type, val, critical_sent, warning_sent = GetAlertMsg(container_name, avetemp, avehumid, warning_value, critical_value, alert_type, warning_sent, critical_sent)
+            if val is not None:
+                logging.info("Output-->" + str(alarm_type) +" -- " + str(direction) +" -- " +  str(measure_type)+" -- " + str(val)+ " -- " + str(critical_sent)+" -- " + str(warning_sent))
+                dbHandler.InsertAlert(alarm_type,direction,measure_type,val,ts,container_name,alert_setting_id) 
+                dbHandler.UpdateAlertSettings(alert_setting_id,warning_sent,critical_sent)
         except Exception as e:
             logging.error("Main: " + str(e))
-        if val is not None:
-            logging.info("Output-->" + str(alarm_type) +" -- " + str(direction) +" -- " +  str(measure_type)+" -- " + str(val)+ " -- " + str(critical_sent)+" -- " + str(warning_sent))
-            dbHandler.InsertAlert(alarm_type,direction,measure_type,val,ts,container_name,alert_setting_id) 
-            dbHandler.UpdateAlertSettings(alert_setting_id,warning_sent,critical_sent)
