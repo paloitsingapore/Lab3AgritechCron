@@ -182,8 +182,8 @@ def InsertActivity(Aid, sensor_id, timenow, Dtype, avetemp, avehumid):
     except Exception as e:
         logging.info("Error: " + e)
 
-def InsertAlert(alert_type,message,repeat_frequency,status,muted,alert_id,alert_time,container_id,alert_setting_id):
-    query = "INSERT INTO alerts (alert_type,message,repeat_frequency,status,muted,alert_id,alert_time,container_id,alert_setting_id) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(alert_type,message,repeat_frequency,status,muted,alert_id,alert_time,container_id,alert_setting_id)
+def InsertAlert(alarm_type,direction,measure_type,value,alert_time,container_name,alert_setting_id):
+    query = "INSERT INTO alerts (alarm_type,direction,measure_type,value,alert_time,container_name,alert_setting_id) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(alarm_type,direction,measure_type,value,alert_time,container_name,alert_setting_id)
     logging.info(query)
     try:
         dbAlter(query)
@@ -221,7 +221,15 @@ def UpdateUserActions(status, system_type, activating, container_id, current_sta
         dbAlter(query)
     except Exception as e:
         logging.info("Error: " + e)
-        
+
+def UpdateAlertSettings(alert_setting_id, warning_sent, critical_sent):
+    query = "UPDATE alert_setting set warning_sent = '{}', critical_sent = '{}' where alert_setting_id = '{}'".format(warning_sent, critical_sent, alert_setting_id)
+    logging.info(query)
+    try:
+        dbAlter(query)
+    except Exception as e:
+        logging.info("Error: " + e)
+
 def ClearUserActions(pid, status, remark):
     query = "UPDATE user_action set status = '{}' , remarks = '{}' where id = '{}'".format(status, remark, pid)
     logging.info(query)
