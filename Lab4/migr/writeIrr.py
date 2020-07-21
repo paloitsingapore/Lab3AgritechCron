@@ -15,7 +15,6 @@ for t in tab1:
 
 for file in os.listdir('/home/pi/crate-4.0.6/data/irr/'): 
     if 'irr_set_hist' in file: 
-        print("Helooooo")
         file_len = (len(file))
         tab = file[0:file_len-7]
         ins_q =  'COPY ' + tab +' FROM  ' + "'file:///home/crate/crate/data/irr/"  + file + "'" + ';'

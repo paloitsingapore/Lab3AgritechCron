@@ -72,7 +72,7 @@ def record():
     insert_irr_set(field_id, setting_id, setting_type, max_sprinkle_dur, offset_bef_sprinkle, max_wind_speed, humid,skip_sprinkle_from,skip_sprinkle_to,last_updated)
 
 if __name__ == '__main__':
-    f = open(os.path.join('/home/pi/Lab3AgritechCron/Lab4/', "irrSet.json"), "r")    
+    f = open(os.path.join('/home/pi/Lab3AgritechCron/Lab4/migr/', "irrSet.json"), "r")    
     json_dict = json.load(f)
     logging.info(json_dict)
     print(json_dict)

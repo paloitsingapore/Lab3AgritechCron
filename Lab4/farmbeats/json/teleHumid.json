@@ -1,14 +1,14 @@
 {
     "deviceid": "452fe528-1c0c-4dc3-bbf3-ab9d1338c2cc",
-    "timestamp": "2020-05-29T10:43:29.269676",
+    "timestamp": "2020-07-20T21:05:05",
     "version": "1",
     "sensors": [
         {
             "id": "98c4b6f3-b183-42c4-ac9a-7ff164de8177",
             "sensordata": [
                 {
-                    "timestamp": "2020-05-29T10:43:29.269676",
-                    "humid": 76
+                    "timestamp": "2020-07-20T21:05:05",
+                    "humid": 25.3
                 }
             ]
         }

@@ -14,7 +14,7 @@ logHandler.run("cron_db_irr_update_set")
 if __name__ == '__main__':
     logging.info("Hello") 
     try:
-        f = open(os.path.join('/home/pi/Lab3AgritechCron/Lab4/', "irrSet.json"), "r")     
+        f = open(os.path.join('/home/pi/Lab3AgritechCron/Lab4/migr/', "irrSet.json"), "r")     
         json_dict = json.load(f)
         logging.info(json_dict)
         
