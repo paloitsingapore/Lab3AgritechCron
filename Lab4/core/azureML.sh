@@ -1,0 +1,10 @@
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/extractMLdata.py
+sleep 2
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadSoilData.py
+sleep 2
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadSettings.py
+sleep 2
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadSensor.py
+sleep 2
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadFaucet.py
+sleep 2

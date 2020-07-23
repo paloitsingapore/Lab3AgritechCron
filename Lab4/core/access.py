@@ -7,11 +7,20 @@ import logHandler
 
 logHandler.run("access")
 
-def get_key(name):
-    query = "select key from config where name ='{}';".format(name)
+def get_key(id):
+    query = "select key from config where id ='{}';".format(id)
     logging.info(query)
     try:
         result = dbHandler.dbFetchOne(query)
         return result[0]
     except Exception as e:
         logging.info("Error: " + e)  
+
+def get_name(id):
+    query = "select name from config where id ='{}';".format(id)
+    logging.info(query)
+    try:
+        result = dbHandler.dbFetchOne(query)
+        return result[0]
+    except Exception as e:
+        logging.info("Error: " + e)      
