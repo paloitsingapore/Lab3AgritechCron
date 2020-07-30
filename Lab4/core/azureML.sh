@@ -8,3 +8,4 @@ sleep 2
 sleep 2
 /usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadFaucet.py
 sleep 2
+/usr/bin/python3 /home/pi/Lab3AgritechCron/Lab4/core/loadlws.py

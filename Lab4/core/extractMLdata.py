@@ -5,7 +5,7 @@ cursor = connection.cursor()
 cursor.execute(query)
 result = cursor.fetchall()
 for tab in result:
-    if tab[0] in ['sensors','soil_data','irr_set_cust','faucets']:
+    if tab[0] in ['sensors','soil_data','irr_set_cust','faucets','lws']:
         cp_data = "COPY " + str(tab[0]) +" TO DIRECTORY '/home/crate/crate/data/az'"
         cursor.execute(cp_data)
 cursor.close()
