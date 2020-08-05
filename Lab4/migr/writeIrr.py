@@ -1,7 +1,7 @@
 from crate import client
 import time
 import os
-f = open("/home/pi/crate-4.0.6/data/irr/irr_set.sql", "r")
+f = open("/home/pi/crate-ce-4.1/data/tab_sql.txt", "r")
 tab = f.read()
 tab1 = tab.split(':')
 connection = client.connect("http://localhost:4200", username="crate")
@@ -13,11 +13,11 @@ for t in tab1:
        print("Execute")
        cursor.execute(str(t1))
 
-for file in os.listdir('/home/pi/crate-4.0.6/data/irr/'): 
-    if 'irr_set_hist' in file: 
+for file in os.listdir('/home/pi/crate-ce-4.1/data/'): 
+    if 'json' in file: 
         file_len = (len(file))
-        tab = file[0:file_len-7]
-        ins_q =  'COPY ' + tab +' FROM  ' + "'file:///home/crate/crate/data/irr/"  + file + "'" + ';'
+        tab = file[0:file_len-8]
+        ins_q =  'COPY ' + tab +' FROM  ' + "'file:///home/crate/crate/data/"  + file + "'" + ';'
         print(ins_q)
         cursor.execute(ins_q)
 
